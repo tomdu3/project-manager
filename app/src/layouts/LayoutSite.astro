@@ -2,16 +2,19 @@
 import TopBar from '@components/site/common/TopBar.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-        <TopBar />
-		<slot />
-	</body>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='viewport' content='width=device-width' />
+    <meta name='generator' content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <!-- fix logo dark/ligth mode visibility issue -->
+  <body class='dark:bg-black dark:text-white'>
+    <div class='max-w-5xl px-4 py-4 mx-auto'>
+      <TopBar />
+      <slot />
+    </div>
+  </body>
 </html>
