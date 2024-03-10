@@ -3,6 +3,8 @@ import PocketBase from 'pocketbase'
 
 import LayoutApp from '@layouts/LayoutApp.astro'
 
+import ProjectCard from '@components/app/projects/ProjectCard.astro'
+
 const pb = new PocketBase('http://127.0.0.1:8090')
 
 const projects = await pb
@@ -13,6 +15,8 @@ console.log(projects)
 ---
 <LayoutApp title='Dashboard'>
     <ul>
-        {projects.map(project => <li>{project.name}</li>)}
+        {projects.map(project =>
+            <ProjectCard project={project} />
+        )}
     </ul>
 </LayoutApp
