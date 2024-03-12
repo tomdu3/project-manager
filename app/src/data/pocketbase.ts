@@ -18,3 +18,10 @@ export async function addProject(name: string) {
 
   return newProject;
 }
+
+export async function getProject(id: string) {
+    const project = await pb.collection('projects').getOne(id)
+  
+    return project
+  }
+  
