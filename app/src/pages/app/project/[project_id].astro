@@ -1,0 +1,22 @@
+---
+import LayoutApp from '@layouts/LayoutApp.astro'
+import { getProject } from '@data/pocketbase'
+
+const { project_id = '' } = Astro.params
+
+const project = await getProject(project_id)
+
+if (!project) {
+  return Astro.redirect('/app/dashboard')
+}
+---
+
+<LayoutApp title={project.name}>
+  <div
+    class='py-10 mx-auto text-white max-w-7xl space-y-6'>
+    <div
+      class='rounded-lg bg-zinc-900 px-5 py-4 sm:py-2.5 text-xl sm:text-3xl md:text-5xl text-white uppercase text-center font-extrabold'>
+      {project.name}
+    </div>
+  </div>
+</LayoutApp>
