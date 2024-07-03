@@ -3,6 +3,7 @@ import LayoutApp from "@layouts/LayoutApp.astro";
 
 import ProjectCard from "@components/app/projects/ProjectCard.astro";
 import AddNewProjectCard from "@components/app/projects/AddNewProjectCard.astro";
+import HamburgerMenuButton from "@components/app/HamburgerMenuButton.astro";
 
 import { getProjects } from '@data/pocketbase'
 
@@ -14,6 +15,9 @@ const projects = await getProjects()
     <div
        class='rounded-lg bg-zinc-900 px-5 py-4 sm:py-2.5 text-xl sm:text-2xl md:text-3xl text-white uppercase text-center font-extrabold'
     >
+    <div class='sm:hidden'>
+      <HamburgerMenuButton />
+    </div>
       Projects
     </div>
     <div class='space-y-6'>
