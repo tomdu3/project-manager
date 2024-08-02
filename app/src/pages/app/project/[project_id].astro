@@ -1,9 +1,10 @@
 ---
 import LayoutApp from "@layouts/LayoutApp.astro";
-import { getProject, getTasks } from "@data/pocketbase";
+import { getProject } from "@data/pocketbase";
 
 import ButtonAddNewTask from "@components/app/tasks/ButtonAddNewTask.astro";
 import HamburgerMenuButton from "@components/app/HamburgerMenuButton.astro";
+import TasksList from "@components/app/tasks/TasksList.astro";
 
 const { project_id = "" } = Astro.params;
 
@@ -12,8 +13,6 @@ const project = await getProject(project_id);
 if (!project) {
   return Astro.redirect("/app/dashboard");
 }
-
-const tasks = await getTasks(project_id);
 
 import ProjectStatus from "@components/app/projects/ProjectStatus.astro";
 ---
@@ -54,18 +53,8 @@ import ProjectStatus from "@components/app/projects/ProjectStatus.astro";
         >
           Tasks to do
         </h2>
-        <div>
-          {
-            tasks.length === 0 && (
-              <p class='text-center text-zinc-900 dark:text-white pb-10'>
-                Nothing yet
-              </p>
-            )
-          }
-
-          <ul class='space-y-6'>
-            {tasks.map((task) => <li>{task.text}</li>)}
-          </ul>
+        <div id='tasks-todo'>
+          <TasksList project_id={project_id} />
         </div>
         <ButtonAddNewTask project_id={project_id} />
       </div>
