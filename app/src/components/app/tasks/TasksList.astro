@@ -1,14 +1,22 @@
 ---
-import { getTasks } from "@data/pocketbase";
+import { getTasks, getStarredTasks } from "@data/pocketbase";
+
 import DeleteTaskButton from "@components/app/tasks/DeleteTaskButton.astro";
 import CompleteTaskButton from "@components/app/tasks/CompleteTaskButton.astro";
-const { project_id, done } = Astro.props
-const tasks = await getTasks({ project_id, done })
+import StarTaskButton from "@components/app/tasks/StarTaskButton.astro";
 
+const { project_id, done, starred } = Astro.props;
+let tasks = null;
+
+if (starred) {
+  tasks = await getStarredTasks();
+} else {
+  tasks = await getTasks({ project_id, done });
+}
 ---
 
 {
-  tasks.length === 0 && (
+  tasks.length === 0 && !starred && (
     <p class='text-center text-zinc-900 dark:text-white'>Nothing yet</p>
   )
 }
@@ -21,10 +29,26 @@ const tasks = await getTasks({ project_id, done })
           <div>
             <CompleteTaskButton task={task} />
           </div>
+          <div>
+            <StarTaskButton task={task} />
+          </div>
           <div class='flex-1'>{task.text}</div>
           <div>
             <DeleteTaskButton task={task} />
           </div>
+          {starred ? (
+            <div>
+              <a href={`/app/project/${task.project}`}>
+                <span class='border mt-0 py-0.5 px-2 self-start rounded-md bg-zinc-800 text-sm font-bold hidden sm:block'>
+                  {task.expand?.project?.name}
+                </span>
+              </a>
+            </div>
+          ) : (
+            <div>
+              <DeleteTaskButton task={task} />
+            </div>
+          )}
         </div>
       </li>
     ))
