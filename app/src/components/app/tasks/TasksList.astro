@@ -2,8 +2,9 @@
 import { getTasks } from "@data/pocketbase";
 import DeleteTaskButton from "@components/app/tasks/DeleteTaskButton.astro";
 import CompleteTaskButton from "@components/app/tasks/CompleteTaskButton.astro";
-const { project_id } = Astro.props;
-const tasks = await getTasks(project_id);
+const { project_id, done } = Astro.props
+const tasks = await getTasks({ project_id, done })
+
 ---
 
 {

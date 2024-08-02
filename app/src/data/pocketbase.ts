@@ -64,10 +64,18 @@ export async function addTask(project_id: string, text: string) {
   return newTask;
 }
 
-export async function getTasks(project_id: string) {
+export async function getTasks({
+  project_id = null,
+  done = false,
+}) {
   const options = {
-    filter: `project = "${project_id}"`,
+    filter: '',
+
   };
+  let filter = `completed = ${done}`
+  filter += ` && project = "${project_id}"`
+
+  options.filter = filter
 
   const tasks = await pb.collection("tasks").getFullList(options);
 
