@@ -33,9 +33,6 @@ if (starred) {
             <StarTaskButton task={task} />
           </div>
           <div class='flex-1'>{task.text}</div>
-          <div>
-            <DeleteTaskButton task={task} />
-          </div>
           {starred ? (
             <div>
               <a href={`/app/project/${task.project}`}>
