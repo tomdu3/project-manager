@@ -4,7 +4,14 @@ import LayoutSite from '@layouts/LayoutSite.astro'
 import {
     isValidData,
     createUser,
+    loginUser,
+    setCookieAndRedirectToDashboard,
+    isLoggedIn,
 } from '@lib/auth'
+
+if (await isLoggedIn(Astro.request)) {
+  return Astro.redirect('/app/dashboard')
+}
 
 let error = ''
 if (Astro.request.method === 'POST') {
@@ -18,11 +25,13 @@ if (Astro.request.method === 'POST') {
     if (password !== password_confirm) {
     error = 'Passwords do not match'
   } else {
-    if (isValidData(email, password)) {
+    if (!isValidData(email, password)) {
         error = 'Invalid data'
     } else {
         try {
             await createUser(email, password)
+            await loginUser(email, password)
+            return setCookieAndRedirectToDashboard()
         } catch (e) {
             error = 'Failed to create user'
         }
