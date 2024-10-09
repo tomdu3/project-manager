@@ -44,6 +44,7 @@ export async function getProjects() {
 export async function addProject(name: string) {
   const newProject = await pb.collection("projects").create({
     name,
+    created_by: pb.authStore.model?.id,
     status: "not started",
   });
 
@@ -59,6 +60,7 @@ export async function getProject(id: string) {
 export async function addTask(project_id: string, text: string) {
   const newTask = await pb.collection("tasks").create({
     project: project_id,
+    created_by: pb.authStore.model?.id,
     text,
   });
 
